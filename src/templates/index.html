@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>研究者検索サイト</title>
+  </head>
+
+  <body>
+	  <h1>研究者検索サイト</h1>
+      <p>
+      下の欄に，研究者番号（8桁の数字）を入れると，類似の研究者を表示します。<br>
+      キーワードを入れると，そのキーワードに近い研究者を表示します。<br>
+      空白区切りで複数のキーワードを入れることもできます。キーワードに「*」をつけると，その個数分，つけたキーワードの重みが増します。 <br>
+      Scoreは0から1の値をとり，1に近いほど類似しています。 <br>
+      </p>
+    <form action="/" method="post">
+      <input type="text" name="sterm" placeholder="研究者番号orキーワード" size=50 style="font-size: 20px;">
+      <input type="submit" value="検索">
+    </form>
+    <h3> 研究者番号or検索の種類： {{ search[0] }}</h3>
+    <h3> 研究者氏名or検索キーワード： {{ search[1] }}</h3>
+    <h3> 所属組織or検索キーワード（内部）　： {{ search[2] }}</h3>
+
+    <table border="1">
+	    <tr><th>No</th><th>Score</th><th>研究者番号</th><th>研究者氏名</th><th>所属組織</th><th>KAKEN</th></tr>
+        {% for row in result_list %}
+        <tr>
+            <td width="50" style="text-align: right;">{{ row[0] }}</td>
+            <td width="80" style="text-align: right;">{{ row[1] }}</td>
+            <td width="100" style="text-align: center;"><form action="/" method="post"><button type="submit" name="sterm" value="{{ row[2] }}">{{ row[2] }}</button></form></td>
+            <td width="150" style="text-align: center;">{{ row[3] }}</td>
+            <td width="300" style="text-align: center;">{{ row[4] }}</td>
+            <td width="50"><a href="{{ row[5] }}" target="_blank">KAKEN</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+  </body>
+</html>
+
+
